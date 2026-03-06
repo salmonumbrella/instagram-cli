@@ -1,0 +1,53 @@
+[project]
+name = "instagram-cli"
+version = "0.1.0"
+description = "CLI for Instagram via instagrapi"
+requires-python = ">=3.12"
+license = "MIT"
+readme = "README.md"
+authors = [{ name = "salmonumbrella" }]
+keywords = ["instagram", "cli", "instagrapi", "social-media", "automation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "instagrapi>=2.1.0",
+    "typer>=0.9.0",
+    "rich>=13.0",
+]
+
+[dependency-groups]
+dev = [
+    "pydantic>=2.0",
+    "pytest>=8.0.0",
+    "ruff>=0.11.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/salmonumbrella/instagram-cli"
+Repository = "https://github.com/salmonumbrella/instagram-cli"
+Issues = "https://github.com/salmonumbrella/instagram-cli/issues"
+
+[project.scripts]
+ig = "ig_cli.main:run"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ig_cli"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,59 @@
+ig - CLI for Instagram via instagrapi
+
+Operational notes for agents:
+  1. Reuse sessions instead of repeated fresh logins.
+     Instagram treats repeated fresh logins as suspicious.
+
+  2. Keep device identity stable across relogins.
+     `ig auth login` reuses saved session UUIDs when they exist.
+
+  3. Use one stable IP/proxy per account.
+     Configure `IG_CLI_PROXY`, `IG_CLI_PROXY_<ALIAS>`, or per-account `proxy` / `proxy_op_ref`.
+     Bright Data residential proxies work here as a normal proxy DSN such as:
+       http://user:pass@host:port
+
+  4. Add challenge handlers for supported email/SMS flows.
+     Configure `challenge_code_cmd` and `change_password_cmd` so instagrapi can resolve supported challenge steps.
+     Handler commands receive:
+       IG_USERNAME
+       IG_CHOICE   (challenge code handler only)
+
+  5. Centralized exception handling is enabled.
+     Checkpoint/session failures are surfaced as JSON errors instead of hidden retries or raw tracebacks.
+
+Proxy and runtime config:
+  Environment variables:
+    IG_CLI_PROXY
+    IG_CLI_PROXY_<ALIAS>
+    IG_CLI_CHALLENGE_CODE_CMD
+    IG_CLI_CHALLENGE_CODE_CMD_<ALIAS>
+    IG_CLI_CHANGE_PASSWORD_CMD
+    IG_CLI_CHANGE_PASSWORD_CMD_<ALIAS>
+
+  Config file structure (`config.json`):
+    {
+      "default_account": "panpan_test",
+      "runtime": {
+        "proxy": "http://user:pass@host:port"
+      },
+      "accounts": {
+        "panpan_test": {
+          "proxy": "http://user:pass@host:port",
+          "challenge_code_cmd": "./scripts/get-ig-code.sh",
+          "change_password_cmd": "./scripts/get-ig-password.sh"
+        }
+      }
+    }
+
+  Credential files may also include:
+    proxy
+    proxy_op_ref
+    challenge_code_cmd
+    change_password_cmd
+
+Behavior:
+  - Normal commands reuse saved sessions lazily and do not pre-validate with timeline fetches.
+  - Use `ig auth validate` when you want an explicit session check.
+  - Browser configuration is not used by instagrapi; proxy + device/session identity are the important knobs.
+
+Use `ig COMMAND --help` for detailed help on any command.

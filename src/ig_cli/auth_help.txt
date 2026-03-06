@@ -1,0 +1,14 @@
+auth - Login, logout, and manage accounts
+
+Operational notes:
+  1. Reuse saved sessions instead of repeated fresh logins.
+  2. `ig auth login` preserves saved device UUIDs when a prior session exists.
+  3. Keep one stable proxy per account with `IG_CLI_PROXY`, `IG_CLI_PROXY_<ALIAS>`, or per-account `proxy` settings.
+  4. Configure `challenge_code_cmd` / `change_password_cmd` for supported email/SMS challenge flows.
+  5. Use `ig auth validate` for a deliberate session check. Normal commands no longer force a timeline validation poke.
+
+Examples:
+  ig auth login --alias panpan_test
+  ig auth validate --account panpan_test
+  ig auth session --alias panpan_test
+  IG_CLI_PROXY_PANPAN_TEST=http://user:pass@host:port ig auth validate --account panpan_test

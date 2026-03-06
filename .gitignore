@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.venv/
+dist/
+*.egg-info/
+.ruff_cache/
+.pytest_cache/
+.vscode/
+.specstory/
+.ig-cli-live-test/
+*.sqlite3
+.coverage
+htmlcov/
+*.pyo
+.mypy_cache/
+.env
+docs/
