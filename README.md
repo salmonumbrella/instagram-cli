@@ -7,14 +7,14 @@ Every command outputs JSON to stdout and errors to stderr. Designed for scriptin
 ## Installation
 
 ```bash
-# Recommended (isolated install, no venv needed)
-uv tool install instagram-cli
+# Via Homebrew
+brew install salmonumbrella/tap/instagram-cli
 
-# Or via pip
-pip install instagram-cli
+# Or via uv
+uv tool install instagram-cli
 ```
 
-The binary is called `ig`.
+Requires [uv](https://docs.astral.sh/uv/). The binary is called `ig`.
 
 ## Quick Start
 
